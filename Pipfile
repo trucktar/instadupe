@@ -1,0 +1,17 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+wemake-python-styleguide = "*"
+yapf = "*"
+
+[packages]
+django = "*"
+django-environ = "*"
+psycopg2 = "*"
+whitenoise = "*"
+
+[requires]
+python_version = "3.7"
