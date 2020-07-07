@@ -12,6 +12,7 @@ django = "*"
 django-environ = "*"
 psycopg2 = "*"
 whitenoise = "*"
+django-registration = "*"
 
 [requires]
 python_version = "3.7"
