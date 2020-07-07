@@ -14,6 +14,7 @@ psycopg2 = "*"
 whitenoise = "*"
 django-registration = "*"
 pillow = "*"
+django-bootstrap4 = "*"
 
 [requires]
 python_version = "3.7"

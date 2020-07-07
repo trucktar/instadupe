@@ -15,10 +15,11 @@ accpatterns = [
          LoginView.as_view(template_name='auth/login.html'),
          name='login'),
     path('logout/', logout_then_login, name='logout'),
+    path('edit/', views.AccountEditView.as_view(), name='account_edit'),
 ]
 
 urlpatterns = [
-    path('<profile_name>/', views.index, name='home'),
+    path('', views.HomeView.as_view(), name='home'),
+    path('<username>/', views.ProfileView.as_view(), name='profile'),
     path('accounts/', include(accpatterns)),
-    path('accounts/edit/', views.edit_account, name='account_edit'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -60,7 +60,7 @@ ROOT_URLCONF = 'instadupe.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'instaclone', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'instadupe', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
