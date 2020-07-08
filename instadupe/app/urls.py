@@ -2,14 +2,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, logout_then_login
 from django.urls import include, path
-from django_registration.backends.activation.views import RegistrationView
+from django_registration.backends.one_step.views import RegistrationView
 
 from instadupe.app import views
 
 # Account related URL patterns
 accpatterns = [
     path('emailsignup/',
-         RegistrationView.as_view(template_name='auth/signup.html'),
+         RegistrationView.as_view(
+             template_name='auth/signup.html',
+             success_url='/',
+         ),
          name='signup'),
     path('login/',
          LoginView.as_view(template_name='auth/login.html'),

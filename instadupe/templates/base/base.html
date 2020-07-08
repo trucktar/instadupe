@@ -1,0 +1,21 @@
+{% load bootstrap4 %}
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport">
+
+{% bootstrap_css %}
+{% block styles %}{% endblock %}
+<title>{% block title %} Instadupe {% endblock %}</title>
+
+<div class="d-flex flex-column">
+  <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center w-100 mx-auto" style="max-width:975px">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </div>
+</div>
+{% bootstrap_javascript jquery='slim'%}

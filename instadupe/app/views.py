@@ -16,6 +16,9 @@ class HomeView(LoginRequiredMixin, View):
 class ProfileView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         username = kwargs.get('username')
+        if username == 'favicon.ico':
+            return redirect(reverse('home'))
+
         return render(request, 'profile.html', {
             'profile': Profile.objects.get(user__username=username),
         })

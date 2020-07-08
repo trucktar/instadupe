@@ -1,55 +1,47 @@
-<!doctype html>
-<html lang="en">
-<meta charset="utf-8">
-<meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport">
-<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-  integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" rel="stylesheet">
-<title>Login • Instadupe</title>
-<style>
-  body {
-    height: 100%;
-    font-size: 14px;
-    line-height: 18px;
-    background-color: #fff;
-    overflow-y: scroll
-  }
-</style>
-<div class="d-flex flex-column">
-  <div class="d-flex justify-content-center" style="background-color:#fafafa">
-    <div class="d-flex justify-content-center w-100 mx-auto" style="max-width:935px">
-      <div class="d-flex flex-column justify-content-center mt-3 w-100" style="max-width:350px">
-        <div class="d-flex flex-column border mb-3 py-2" style="background-color:#fff">
-          <h1 class="mb-4 text-center mt-3">Instadupe</h1>
-          <form action="" class="d-flex flex-column">
-            <div class="mx-5 mb-2"><input class="form-control" placeholder="Username"
-                style="font-size:12px;height:36px"></div>
-            <div class="mx-5 mb-2"><input class="form-control" placeholder="Password" style="font-size:12px;height:36px"
-                type="password"></div>
-            <div class="mx-5 my-2"><button class="font-weight-bold btn btn-block btn-primary btn-sm" type="button">Log in</button></div>
-            <div class="d-flex mb-3 mt-2 mx-5">
-              <div class="d-flex mt-2 flex-fill" style="height:1px;background-color:#dbdbdb"></div>
-              <div class="d-flex font-weight-bold mx-3 text-muted text-uppercase">or</div>
-              <div class="d-flex mt-2 flex-fill" style="height:1px;background-color:#dbdbdb"></div>
-            </div>
-            <div class="mx-5 my-2 text-center"><button class="font-weight-bold btn btn-sm btn-link text-decoration-none"
-                type="button" style="color: #00376b;">Log in with
-                Facebook</button></div>
-            <a class="text-center mx-5 mb-2 text-decoration-none" href="" style="font-size:12px; color: #00376b;">Forgot
-              your password?</a>
-          </form>
-        </div>
-        <div class="d-flex flex-column border mb-3 py-2" style="background-color:#fff">
-          <p class="m-3 text-center">Don't ave an account? <a class="text-decoration-none font-weight-bold"
-              href="signup.html">Sign
-              up</a>
-        </div>
+{% extends 'base/base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+{% block title %} Log in • Instadupe {% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column justify-content-center mt-3 w-100" style="max-width:350px">
+  <div class="d-flex flex-column border mb-3 py-2" style="background-color:#fff">
+    <h1 class="mb-4 text-center mt-3">Instadupe</h1>
+    <form action="{% url 'login' %}" method="POST" class="d-flex flex-column" novalidate>
+      {% csrf_token %}
+      {% for field in form.visible_fields %}
+      {% bootstrap_field field form_group_class='mx-5 mb-2' show_label=False show_help=False%}
+      {% if field.has_error %} {{ field.errors }} {% endif %}
+      {% endfor %}
+      <div class="mx-5 my-2">
+        {% bootstrap_button 'Log in' button_type='submit' size='sm' extra_classes='btn-block font-weight-bold'%}
       </div>
-    </div>
+      <div class="d-flex mb-3 mt-2 mx-5">
+        <div class="d-flex mt-2 flex-grow-1 border-top" style="height:1px;"></div>
+        <div class="d-flex font-weight-bold mx-3 text-muted text-uppercase">or</div>
+        <div class="d-flex mt-2 flex-grow-1 border-top" style="height:1px;"></div>
+      </div>
+      <div class="mx-5 mb-2 text-center"><button class="font-weight-bold btn btn-sm btn-link text-decoration-none"
+          type="button" style="color: #00376b;">Log in with
+          Facebook</button></div>
+      {% if form.non_field_errors %}
+      <ul class="list-unstyled m-0 px-3">
+        {% for error in form.non_field_errors %}
+        {% bootstrap_alert error dismissible=False alert_type='danger' %}
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <a class="text-center mx-5 my-2 text-decoration-none" href="" style="font-size:12px; color: #00376b;">Forgot
+        your password?</a>
+    </form>
+  </div>
+  <div class="d-flex flex-column border mb-3 py-2" style="background-color:#fff">
+    <p class="m-3 text-center">Don't have an account? <a class="text-decoration-none font-weight-bold"
+        href="{% url 'signup' %}">Sign up</a></p>
   </div>
 </div>
-<script crossorigin="anonymous" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-  src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script crossorigin="anonymous" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-  src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script crossorigin="anonymous" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-  src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+{% endblock %}
