@@ -15,6 +15,7 @@ whitenoise = "*"
 django-registration = "*"
 pillow = "*"
 django-bootstrap4 = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
