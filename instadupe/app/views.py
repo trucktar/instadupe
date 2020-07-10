@@ -1,16 +1,18 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import redirect, render, reverse
 from django.views import View
 
-from instadupe.app.forms import AccountEditForm
+from instadupe.app.forms import AccountEditForm, ProfileEditForm
 from instadupe.app.models import Image, Profile
 
 
 class HomeView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'index.html', {
-            'images': Image.objects.all(),
-        })
+        return render(
+            request, 'index.html', {
+                'profile': Profile.objects.get(user=request.user),
+                'images': Image.objects.all(),
+            })
 
 
 class ProfileView(LoginRequiredMixin, View):
@@ -18,10 +20,17 @@ class ProfileView(LoginRequiredMixin, View):
         username = kwargs.get('username')
         if username == 'favicon.ico':
             return redirect(reverse('home'))
+        context = {'profile': Profile.objects.get(user__username=username)}
+        if request.user.is_authenticated:
+            context['form'] = ProfileEditForm()
+        return render(request, 'profile.html', context)
 
-        return render(request, 'profile.html', {
-            'profile': Profile.objects.get(user__username=username),
-        })
+    def post(self, request, *args, **kwargs):
+        profile = Profile.objects.get(user=request.user)
+        form = ProfileEditForm(request.FILES, instance=profile)
+        form.save()
+
+        return redirect(request.META.get('HTTP_REFERER'))
 
 
 class AccountEditView(LoginRequiredMixin, View):
@@ -29,15 +38,13 @@ class AccountEditView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         profile = Profile.objects.get(user=request.user)
-        return render(
-            request, 'settings.html', {
-                'form':
-                AccountEditForm(
-                    initial={
-                        field: getattr(profile, field)
-                        for field in self.__class__.fields
-                    }),
-            })
+        form_data = {
+            field: getattr(profile, field)
+            for field in self.__class__.fields
+        }
+        return render(request, 'settings.html', {
+            'form': AccountEditForm(initial=form_data),
+        })
 
     def post(self, request, *args, **kwargs):
         form = AccountEditForm(request.POST, request.FILES)

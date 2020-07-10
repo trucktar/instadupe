@@ -7,15 +7,20 @@
 <meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport">
 
 {% bootstrap_css %}
-{% block styles %}{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+{% endblock %}
 <title>{% block title %} Instadupe {% endblock %}</title>
 
-<div class="d-flex flex-column">
+<div class="d-flex flex-column mb-5">
+  {% block navbar %}{% endblock %}
   <div class="d-flex justify-content-center">
-    <div class="d-flex justify-content-center w-100 mx-auto" style="max-width:975px">
+    <div class="d-flex justify-content-between w-100 mx-auto" style="max-width:935px">
       {% block content %}
       {% endblock %}
     </div>
   </div>
+  {% block footer %}{% endblock %}
 </div>
 {% bootstrap_javascript jquery='slim'%}
+{% block scripts %}{% endblock %}

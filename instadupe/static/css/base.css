@@ -1,0 +1,23 @@
+body {
+  min-height: 100%;
+  font-size: 15px;
+  line-height: 18px;
+  background-color: #fafafa;
+  overflow-y: scroll;
+}
+.card .card-header {
+  height: 60px;
+  background-color: #fff;
+}
+.card .card-footer {
+  min-height: 56px;
+  background-color: #fff;
+}
+.card-footer .form-control {
+  max-height: 80px;
+  box-shadow: none;
+  font-size: 14px;
+  line-height: 18px;
+  outline: 0;
+  resize: none;
+}

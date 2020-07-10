@@ -3,12 +3,13 @@
 {% load bootstrap4 %}
 
 {% block styles %}
+{{ block.super }}
 <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 {% endblock %}
 {% block title %} Sign up • Instadupe {% endblock %}
 
 {% block content %}
-<div class="d-flex flex-column justify-content-center mt-3 w-100" style="max-width:350px">
+<div class="d-flex flex-column justify-content-center mt-3 mx-auto w-100" style="max-width:350px">
   <div class="d-flex flex-column border mb-3 py-2" style="background-color:#fff">
     <h1 class="mb-2 text-center mt-3">Instadupe</h1>
     {% if form.non_field_errors %}
@@ -31,7 +32,7 @@
       </div>
       {% for field in form.visible_fields %}
       {% bootstrap_field field form_group_class='mx-5 mb-2' error_css_class='is-invalid' show_label=False show_help=False%}
-      {% if field.has_error %}{{ field.errors }}{% endif %}
+      {% if field.has_error %} {{ field.errors }} {% endif %}
       {% endfor %}
       <div class="mx-5 my-2">
         {% bootstrap_button 'Sign up' button_type='submit' size='sm' extra_classes='btn-block font-weight-bold'%}

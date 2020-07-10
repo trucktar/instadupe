@@ -1,20 +1,17 @@
-from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserChangeForm
+from django.forms import CharField, ModelForm
 
 from instadupe.app.models import Profile
 
 
-class UserEditForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['username', 'email']
-
-
-class ProfileEditForm(forms.ModelForm):
+class ProfileEditForm(ModelForm):
     class Meta:
         model = Profile
         fields = ['avatar', 'website', 'bio']
 
+    fullname = CharField(max_length=180, required=False)
 
-class AccountEditForm(UserEditForm, ProfileEditForm):
-    fullname = forms.CharField(max_length=180)
+
+class AccountEditForm(UserChangeForm):
+    class Meta(UserChangeForm.Meta):
+        fields = ['username', 'email', 'password']

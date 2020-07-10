@@ -66,7 +66,7 @@ class Image(models.Model):
     """User-uploaded images is represented by this model."""
 
     image = models.ImageField(upload_to='uploads/')
-    caption = models.TextField(max_length=280, blank=True)
+    caption = models.TextField(max_length=280)
     timestamp = models.DateTimeField(auto_now_add=True)
     profile = models.ForeignKey(Profile,
                                 on_delete=models.CASCADE,

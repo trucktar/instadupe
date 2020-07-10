@@ -3,12 +3,13 @@
 {% load bootstrap4 %}
 
 {% block styles %}
+{{ block.super }}
 <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 {% endblock %}
 {% block title %} Log in • Instadupe {% endblock %}
 
 {% block content %}
-<div class="d-flex flex-column justify-content-center mt-3 w-100" style="max-width:350px">
+<div class="d-flex flex-column justify-content-center mt-3 mx-auto w-100" style="max-width:350px">
   <div class="d-flex flex-column border mb-3 py-2" style="background-color:#fff">
     <h1 class="mb-4 text-center mt-3">Instadupe</h1>
     <form action="{% url 'login' %}" method="POST" class="d-flex flex-column" novalidate>
