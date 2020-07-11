@@ -13,11 +13,11 @@
   <header class="d-flex mb-5">
     <div class="d-flex mr-4 w-50 flex-column">
       <div class="mx-auto" style="height: 150px; width: 150px;">
-        <div class="d-flex flex-column rounded-circle h-100 w-100 mx-auto">
-          {% if user.is_authenticated %}
+        <div class="d-flex flex-column h-100 w-100 mx-auto">
           <button type="submit" class="border-0 w-100 h-100 p-0" style="background: none;">
-            <img src="{{ profile.avatar.url }}" alt="" class="h-100 w-100">
+            <img src="{{ profile.avatar.url }}" alt="" class="h-100 w-100 rounded-circle">
           </button>
+          {% if user.is_authenticated %}
           <form enctype="multipart/form-data" method="POST" id="change-avatar"
             action="{% url 'profile' profile.username %}">
             {% csrf_token %}
@@ -30,7 +30,7 @@
     <section class="d-flex flex-column w-100">
       <div class="d-flex align-items-center mb-3">
         <h3 class="mt-1">{{ profile.username }}</h3>
-        <a href="{% url 'account_edit' %}" class="btn btn-outline-secondary btn-sm font-weight-bold ml-3">Edit
+        <a href="{% url 'account-edit' %}" class="btn btn-outline-secondary btn-sm font-weight-bold ml-3">Edit
           Profile</a>
         <button class="btn ml-1">
           <svg width="24" height="24" viewBox="0 0 16 16" class="bi bi-gear-wide" fill="currentColor"
@@ -49,9 +49,12 @@
           <span class="font-weight-bold">{{ profile.followers.count }}</span>
           <span>follower{{ profile.followers.count|pluralize }}</span>
         </li>
-        <li class="mr-4"><span class="font-weight-bold mr-1">{{ profile.following.count }}</span>following</li>
+        <li class="mr-4">
+          <span class="font-weight-bold mr-1">{{ profile.following.count }}</span>
+          <span>following</span>
+        </li>
       </ul>
-      <div class="d-flex flex-column" style="font-size: 16px;line-height:25px">
+      <div class="d-flex flex-column" style="font-size:16px;line-height:25px">
         <span class="font-weight-bold">{{ profile.fullname }}</span>
         <span>{{ profile.bio }}</span>
         <a href="{{ profile.website }}" class="text-decoration-none font-weight-bold">{{ profile.website }}</a>

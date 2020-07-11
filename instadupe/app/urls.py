@@ -8,17 +8,21 @@ from instadupe.app import views
 
 # Account related URL patterns
 accpatterns = [
-    path('emailsignup/',
-         RegistrationView.as_view(
-             template_name='auth/signup.html',
-             success_url='/',
-         ),
-         name='signup'),
-    path('login/',
-         LoginView.as_view(template_name='auth/login.html'),
-         name='login'),
+    path(
+        'emailsignup/',
+        RegistrationView.as_view(
+            template_name='accounts/signup.html',
+            success_url='/',
+        ),
+        name='signup',
+    ),
+    path(
+        'login/',
+        LoginView.as_view(template_name='accounts/login.html'),
+        name='login',
+    ),
     path('logout/', logout_then_login, name='logout'),
-    path('edit/', views.AccountEditView.as_view(), name='account_edit'),
+    path('edit/', views.AccountEditView.as_view(), name='account-edit'),
 ]
 
 urlpatterns = [

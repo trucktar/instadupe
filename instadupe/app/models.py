@@ -9,15 +9,20 @@ class Profile(models.Model):
     when the User model emits a post-save signal.
     """
 
-    avatar = models.ImageField(upload_to='avatars/',
-                               default='avatars/default-user.png',
-                               blank=True)
-    website = models.URLField(blank=True)
-    bio = models.TextField(max_length=280, blank=True)
+    avatar = models.ImageField(
+        upload_to='avatars/',
+        default='avatars/default-user.png',
+        blank=True,
+    )
+    website = models.URLField(default='', blank=True)
+    bio = models.TextField(max_length=280, default='', blank=True)
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
-    following = models.ManyToManyField('self',
-                                       symmetrical=False,
-                                       related_name='followers')
+    following = models.ManyToManyField(
+        'self',
+        symmetrical=False,
+        related_name='followers',
+    )
 
     @property
     def username(self):
@@ -61,6 +66,10 @@ class Profile(models.Model):
     def is_following(self, profile):
         return self.following.filter(user=profile.user).count() == 1
 
+    @classmethod
+    def get_profile(cls, username):
+        return cls.objects.get(user__username=username)
+
 
 class Image(models.Model):
     """User-uploaded images is represented by this model."""
@@ -68,9 +77,12 @@ class Image(models.Model):
     image = models.ImageField(upload_to='uploads/')
     caption = models.TextField(max_length=280)
     timestamp = models.DateTimeField(auto_now_add=True)
-    profile = models.ForeignKey(Profile,
-                                on_delete=models.CASCADE,
-                                related_name='images')
+
+    profile = models.ForeignKey(
+        Profile,
+        on_delete=models.CASCADE,
+        related_name='images',
+    )
 
 
 class Like(models.Model):
@@ -79,10 +91,12 @@ class Like(models.Model):
     It maintains a relationship with both Image and Profile models.
     """
 
-    image = models.ForeignKey(Image,
-                              on_delete=models.CASCADE,
-                              related_name='likes')
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    image = models.ForeignKey(
+        Image,
+        on_delete=models.CASCADE,
+        related_name='likes',
+    )
 
 
 class Comment(models.Model):
@@ -92,7 +106,10 @@ class Comment(models.Model):
     """
 
     comment = models.CharField(max_length=280)
-    image = models.ForeignKey(Image,
-                              on_delete=models.CASCADE,
-                              related_name='comments')
+
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    image = models.ForeignKey(
+        Image,
+        on_delete=models.CASCADE,
+        related_name='comments',
+    )
