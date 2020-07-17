@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -9,11 +10,7 @@ class Profile(models.Model):
     when the User model emits a post-save signal.
     """
 
-    avatar = models.ImageField(
-        upload_to='avatars/',
-        default='avatars/default-user.png',
-        blank=True,
-    )
+    avatar = CloudinaryField('avatar', folder='instadupe/avatars/')
     website = models.URLField(default='', blank=True)
     bio = models.TextField(max_length=280, default='', blank=True)
 
@@ -74,7 +71,7 @@ class Profile(models.Model):
 class Image(models.Model):
     """User-uploaded images is represented by this model."""
 
-    image = models.ImageField(upload_to='uploads/')
+    image = CloudinaryField('image', folder='instadupe/uploads/')
     caption = models.TextField(max_length=280)
     timestamp = models.DateTimeField(auto_now_add=True)
 
