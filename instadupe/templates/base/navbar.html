@@ -1,11 +1,16 @@
+{% load cloudinary %}
 <nav class="navbar justify-content-center fixed-top border-bottom" style="background-color: #fff; min-height: 54px;">
   <div class="d-flex w-100 justify-content-between align-items-center" style="max-width: 935px;">
     <a href="{% url 'home' %}" class="mr-0 navbar-brand text-dark font-weight-bold">Instadupe</a>
     <form class="form-inline" action="{% url 'home' %}" style="height: 28px;">
       <input type="text" class="form-control h-100 text-center" placeholder="Search" style="font-size: 14px;">
     </form>
-    <a href="{% url 'profile' user.username %}" style="height: 32px; width: 32px;"><img
-        alt="{{ profile.username }}'s profile picture" src="{{ profile.avatar.url }}"
-        class="rounded-circle w-100 h-100"></a>
+    <a href="{% url 'profile' user.username %}" style="height: 32px; width: 32px;">
+      {% if profile.avatar %}
+      {% cloudinary profile.avatar width=32 height=32 class="rounded-circle"%}
+      {% else %}
+      {% cloudinary 'instadupe/avatars/default-user_o9n7t7.png' width=32 height=32 class="rounded-circle"%}
+      {% endif %}
+    </a>
   </div>
 </nav>

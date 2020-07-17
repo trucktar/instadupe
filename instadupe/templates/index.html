@@ -1,6 +1,5 @@
 {% extends 'base/base.html' %}
-{% load static %}
-{% load bootstrap4 %}
+{% load cloudinary %}
 
 {% block title %} Instadupe {% endblock %}
 
@@ -13,9 +12,12 @@
   {% for image in images %}
   <div class="mb-3 card">
     <div class="d-flex align-items-center card-header p-3">
-      <a href="{% url 'profile' image.profile.username %}" style="height:32px;width:32px">
-        <img alt="{{ image.profile.username }}'s profile picture" class="w-100 h-100 rounded-circle"
-          src="{{ image.profile.avatar.url }}">
+      <a href="{% url 'profile' image.profile.username %}">
+        {% if image.profile.avatar %}
+        {% cloudinary image.profile.avatar width=32 height=32 class="rounded-circle"%}
+        {% else %}
+        {% cloudinary 'instadupe/avatars/default-user_o9n7t7.png' width=32 height=32 class="rounded-circle"%}
+        {% endif %}
       </a>
       <a href="{% url 'profile' image.profile.username %}"
         class="font-weight-bold text-decoration-none text-dark ml-2">{{ image.profile.username }}</a>
@@ -104,9 +106,12 @@
 </div>
 <div class="d-flex flex-column position-fixed w-100" style="max-width:293px;top:80px;left:848px;right:0;height:100vh">
   <div class="d-flex align-items-center" style="height:60px">
-    <a href="{% url 'profile' profile.username %}" style="height:56px;width:56px">
-      <img alt="{{ profile.username }}'s profile picture" class="w-100 h-100 rounded-circle"
-        src="{{ profile.avatar.url }}">
+    <a href="{% url 'profile' profile.username %}">
+      {% if profile.avatar %}
+      {% cloudinary profile.avatar width=56 height=56 class="rounded-circle"%}
+      {% else %}
+      {% cloudinary 'instadupe/avatars/default-user_o9n7t7.png' width=56 height=56 class="rounded-circle"%}
+      {% endif %}
     </a>
     <div class="d-flex flex-column justify-content-center ml-3">
       <a class="font-weight-bold text-decoration-none text-dark mb-1"

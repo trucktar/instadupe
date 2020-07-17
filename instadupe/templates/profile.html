@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% load bootstrap4 %}
+{% load cloudinary %}
 
 {% block title %} {{ profile.fullname }} (@{{ profile.username }}) • Instadupe photos {% endblock %}
 
@@ -12,10 +12,14 @@
 <div class="d-flex flex-column w-100 position-relative" style="top:80px">
   <header class="d-flex mb-5">
     <div class="d-flex mr-4 w-50 flex-column">
-      <div class="mx-auto" style="height: 150px; width: 150px;">
+      <div class="mx-auto">
         <div class="d-flex flex-column h-100 w-100 mx-auto">
           <button type="submit" class="border-0 w-100 h-100 p-0" style="background: none;">
-            <img src="{{ profile.avatar.url }}" alt="" class="h-100 w-100 rounded-circle">
+            {% if profile.avatar %}
+            {% cloudinary profile.avatar width=150 height=150 class="rounded-circle"%}
+            {% else %}
+            {% cloudinary 'instadupe/avatars/default-user_o9n7t7.png' width=150 height=150 class="rounded-circle"%}
+            {% endif %}
           </button>
           {% if user.is_authenticated %}
           <form enctype="multipart/form-data" method="POST" id="change-avatar"
